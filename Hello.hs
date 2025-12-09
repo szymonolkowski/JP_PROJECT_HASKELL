@@ -8,6 +8,7 @@ findPytriples n =
     , b <- reverse [1 .. c - 1]
     , b >= min_b -- Dodano warunek b >= a (czyli b >= (a_plus_b - b))
     , let a = a_plus_b - b
+    , gcd a (gcd b c) == 1
     , a > 0
     -- Warunek Pitagorejski: a^2 + b^2 = c^2
     , a * a + b * b == c * c
