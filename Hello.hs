@@ -2,7 +2,7 @@
 findPytriples :: Int -> [(Int, Int, Int)]
 findPytriples n =
     [ (a, b, c)
-    | c <- reverse [1 .. (n) `div` 2 - 1] -- Uproszczony zakres dla c
+    | c <- reverse [1 .. n `div` 2 - 1] -- Uproszczony zakres dla c
     , let a_plus_b = n - c
     , let min_b = a_plus_b `div` 2
     , b <- reverse [1 .. c - 1]
