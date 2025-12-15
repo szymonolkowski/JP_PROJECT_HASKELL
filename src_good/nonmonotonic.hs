@@ -33,5 +33,5 @@ loop p n countNonMonotonic = do
 
 main :: IO ()
 main = do
-    let p = 0.99999999
+    let p = 0.9
     loop p 0 0
