@@ -25,15 +25,6 @@ Jeżeli nie istnieje pierwotna trójka sumująca się do `n`, zwróć trójkę p
 
 * Wejście: `12` → Wyjście: `(3, 4, 5)`.
 
-**Sugestia rozwiązania (Euclid):**
-Użyj wzoru Euklidesa dla *pierwotnych* trójek:
-
-* Niech `u > v > 0` całkowite, `gcd(u, v) = 1` i `u` i `v` mają różne parzystości (czyli nie są oboje parzyste ani oboje nieparzyste).
-* Wtedy `a = u^2 - v^2`, `b = 2*u*v`, `c = u^2 + v^2` daje pierwotną trójkę.
-* Suma: `S = a + b + c = 2*u*(u + v)`.
-
-Zatem aby znaleźć pierwotną trójkę o sumie `n` musimy znaleźć pary `(u, v)` spełniające `2*u*(u + v) = n` z warunkami na gcd i parzystość. Jeśli nie ma rozwiązania dla danego `n`, zmniejszamy `m = n-1, n-2, ...` aż znajdziemy pierwsze `m` z rozwiązaniem.
-
 **Złożoność:**
 
 * W najgorszym wypadku szukamy kolejnych `m < n`. Możemy jednak faktoryzować `n/2` i testować dzielniki `u` szybciej. Znalezienie pary `(u, v)` wymaga iteracji po dzielnikach `n/2` lub po możliwych `u` do `O(sqrt(n))`.
@@ -59,15 +50,6 @@ Dodatkowa uwaga: dla małych `m` (np. `m ≤ 100`) odsetek może być 0 (w prakt
 
 **Wyjście:** najmniejsze `n` które spełnia warunek (tj. odsetek liczb niemonotonicznych w `0..n` jest > `p`).
 
-**Sugestie rozwiązania:**
-
-* Zliczenie liczb monotonicznych do `n` można zrealizować za pomocą *digit DP* (dynamic programming na cyfrach), ponieważ bezpośrednie przeglądanie wszystkich liczb jest niepraktyczne dla dużego `n`.
-* Alternatywnie, dla całych zakresów długości cyfr można wykorzystać kombinatorykę:
-
-  * Liczba całkowita o stałej długości `k` (z dopuszczonymi zerami na przodzie) jest niemalejąca wtedy i tylko wtedy, gdy jej cyfry tworzą nieściągalny ciąg kombinatoryczny. Liczbę niemalejących ciągów długości `k` z alfabetu `0..9` można policzyć jako `C(k+9, 9)` (ze względu na kombinacje z powtórzeniami). Podobnie da się policzyć ciągi nierosnące.
-  * Uwaga: trzeba ostrożnie traktować liczenia z powodu powtórnego zliczania liczb stałych (np. same zera) i kwestii prowadzących zer.
-* Najbezpieczniejszym i prostym do implementacji podejściem jest *digit DP* z parametrami: pozycja, poprzednia cyfra, stan czy dotychczas jest niemalejąco / nierosnąco / obydwa, flaga ograniczenia (czy dotychczas zapisujemy prefiks równy prefiksowi n), i flaga prowadzących zer.
-
 **Cel:** znaleźć najmniejsze `n` takie, że:
 
 ```
@@ -90,20 +72,6 @@ Podwójny pandigital to liczba składająca się z cyfr `0..9` każdej dokładni
 **Wejście:** liczba całkowita `n` (`1 ≤ n ≤ 11`).
 
 **Wyjście:** liczba sposobów (permutacji cyfr spełniających warunki) podzielnych przez `n`.
-
-**Sugestia rozwiązania:**
-
-* Problem polega na policzeniu permutacji 20 pozycji, w których każda cyfra 0..9 występuje dokładnie dwa razy, przy czym pierwsza cyfra ≠ 0, i liczba powstała jest podzielna przez `n`.
-* Najprostsze/praktyczne podejście: *dynamic programming po liczbie stanów reprezentujących użycie cyfr* (DP na kombina­torialnym stanie):
-
-  * Reprezentujemy ile razy użyliśmy każdej z 10 cyfr (każda 0..2) — to daje `3^10 = 59,049` możliwych stanów.
-  * Dla każdego takiego stanu przechowujemy liczbę sposobów (liczb porządkowych) prowadzących do reszty modulo `n`. DP przechodzi dodając jedną kolejną cyfrę `d` (o ile jej użycie nie przekracza 2) i aktualizując resztę: `new_rem = (old_rem * 10 + d) % n`.
-  * Trzeba też rozróżnić pozycję pierwszej cyfry: nie wolno stawiać `0` jako pierwszej — można to załatwić przez inicjalizację DP tylko z dopuszczalnymi cyframi na pierwszym kroku lub przez osobną obsługę pozycji 0.
-  * Całkowita złożoność to `O(3^10 * 10 * n)` przy memoizacji/tabulacji, co jest wykonalne w czasie (przy `n ≤ 11`).
-* Dodatkowe optymalizacje:
-
-  * Szybkie kodowanie stanu wektorowego do liczby w systemie trójkowym.
-  * Wykorzystanie faktu, że cyfry powtarzają się dokładnie dwa razy — można też liczyć permutacje z współczynnikami dwumianowymi przy brute-force dla reszt modulo n, lecz DP jest prostsze w implementacji i mniej podatny na błędy.
 
 **Złożoność:**
 
